@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>图片懒加载</title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="./css/index.css">
+	<script type="text/javascript" src="./js/jquery.min.js"></script>
+</head>
+<body>
+	<div class="ct">
+		<ul class="img-container clearfix">
+			<li><a href=""><img src="" alt="" data-src="http://cdn.jirengu.com/book.jirengu.com/img/1.jpg"></a></li>
+			<li><a href=""><img src="" alt="" data-src="http://cdn.jirengu.com/book.jirengu.com/img/2.jpg"></a></li>
+			<li><a href=""><img src="" alt="" data-src="http://cdn.jirengu.com/book.jirengu.com/img/3.jpg"></a></li>
+			<li><a href=""><img src="" alt="" data-src="http://cdn.jirengu.com/book.jirengu.com/img/4.jpg"></a></li>
+			<li><a href=""><img src="" alt="" data-src="http://cdn.jirengu.com/book.jirengu.com/img/5.jpg"></a></li>
+			<li><a href=""><img src="" alt="" data-src="http://cdn.jirengu.com/book.jirengu.com/img/6.jpg"></a></li>
+			<li><a href=""><img src="" alt="" data-src="http://cdn.jirengu.com/book.jirengu.com/img/7.jpg"></a></li>
+			<li><a href=""><img src="" alt="" data-src="http://cdn.jirengu.com/book.jirengu.com/img/8.jpg"></a></li>
+			<li><a href=""><img src="" alt="" data-src="http://cdn.jirengu.com/book.jirengu.com/img/9.jpg"></a></li>
+			<li><a href=""><img src="" alt="" data-src="http://cdn.jirengu.com/book.jirengu.com/img/10.jpg"></a></li>
+			<li><a href=""><img src="" alt="" data-src="http://cdn.jirengu.com/book.jirengu.com/img/11.jpg"></a></li>
+			<li><a href=""><img src="" alt="" data-src="http://cdn.jirengu.com/book.jirengu.com/img/12.jpg"></a></li>
+			<li><a href=""><img src="" alt="" data-src="http://cdn.jirengu.com/book.jirengu.com/img/13.jpg"></a></li>
+			<li><a href=""><img src="" alt="" data-src="http://cdn.jirengu.com/book.jirengu.com/img/14.jpg"></a></li>
+			<li><a href=""><img src="" alt="" data-src="http://cdn.jirengu.com/book.jirengu.com/img/15.jpg"></a></li>
+			<li><a href=""><img src="" alt="" data-src="http://cdn.jirengu.com/book.jirengu.com/img/16.jpg"></a></li>
+		</ul>
+	</div>
+
+	<script type="text/javascript">
+		var clock;
+		lazyRender();
+		function lazyRender() {
+			$('.img-container img').each(function(){
+				var $this = $(this);
+				if(checkShow($this) && !isLoaded($this)) {
+					loadImg($this);
+				}
+			});
+		}
+
+		$(window).on('scroll', function(){
+			if(clock) {
+				clearTimeout(clock);
+			}
+			clock = setTimeout(function(){
+				console.log('hello');
+				lazyRender();
+			}, 300);
+			
+		});
+
+		function checkShow($img) {
+			var scrollTop = $(window).scrollTop();
+			var windowHeight = $(window).height();
+			var offsetTop = $img.offset().top;
+
+			if(offsetTop<scrollTop+windowHeight && offsetTop>scrollTop) {
+				return true;
+			}
+
+			return false;
+		}
+
+		function isLoaded($img) {
+			return $img.attr('data-src') === $img.attr('src');
+		}
+
+		function loadImg($img) {
+			var dataSrc = $img.attr('data-src');
+			$img.attr('src', dataSrc);
+		}
+	</script>
+</body>
+</html>
